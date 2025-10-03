@@ -1,0 +1,12 @@
+{
+  "name": "ergogen",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "build": "ergogen . && npm run plate",
+    "plate": "npx @jscad/cli@1 output/cases/plate.jscad -of stla -o output/cases/plate.stl"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}

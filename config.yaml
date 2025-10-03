@@ -1,0 +1,237 @@
+units:
+    # Proxy Spacing Variables
+    kx: cx
+    ky: cy
+    # Padding Variables
+    px: kx + 2
+    py: ky + 2
+
+    board_w: px + 2
+    board_h: py + 2
+    board_left: 0
+    board_top: -2
+    board_right: board_w
+    board_bottom: board_h - 2
+
+points:
+    zones:
+        matrix:
+            columns:
+                outer:
+                    rows.mod.skip: true
+                    key:
+                        column_net: P111
+                pinky:
+                    rows.mod.skip: true
+                    key:
+                        column_net: P010
+                ring:
+                    rows.mod.skip: true
+                    key:
+                        column_net: P009
+                middle:
+                    key:
+                        column_net: P106
+                index:
+                    key:
+                        column_net: P011
+                inner:
+                    key:
+                        column_net: P017
+            rows:
+                mod:
+                    row_net: P002
+                bottom:
+                    row_net: P029
+                home:
+                    row_net: P031
+                top:
+                    row_net: P024
+            anchor:
+                # Shift the PCB slightly to the right and down, otherwise it's weirdly positioned outside of the main sheet in KiCad
+                shift: [150, -180]
+outlines:
+    raw:
+        - what: rectangle
+          where: true
+          size: [px, py]
+    keys:
+        - what: rectangle
+          where: true
+          size: [kx-0.5, ky-0.5]
+    board:
+        - what: polygon
+          operation: stack
+          points:
+              - ref: matrix_outer_top
+                shift: [-11, 13]
+              - ref: matrix_inner_top
+                shift: [11, 13]
+              - ref: matrix_inner_mod
+                shift: [11, -11]
+              - ref: matrix_middle_mod
+                shift: [-11, -11]
+              - ref: matrix_middle_bottom
+                shift: [-11, -11]
+              - ref: matrix_outer_bottom
+                shift: [-11, -11]
+    plateKeys:
+        - name: board
+        - operation: subtract
+          what: rectangle
+          where: true
+          size: [13.8, 13.8]
+    plateHoles:
+        - what: circle
+          radius: 1.5
+          where:
+            - ref: matrix_outer_top
+              shift: [9.5, -9.5]
+        - what: circle
+          radius: 1.5
+          where:
+            - ref: matrix_outer_bottom
+              shift: [9.5, 9.5]
+        - what: circle
+          radius: 1.5
+          where:
+            - ref: matrix_inner_top
+              shift: [-9.5, -9.5]
+        - what: circle
+          radius: 1.5
+          where:
+            - ref: matrix_inner_mod
+              shift: [-9.5, 9.5]
+        - what: circle
+          radius: 1.5
+          where:
+            - ref: matrix_index_mod
+              shift: [-9.5, 9.5]
+    plate:
+        - name: plateKeys
+        - operation: subtract
+          name: plateHoles
+    combo:
+        - name: board
+        - operation: subtract
+          name: keys
+pcbs:
+    split-ortho:
+        outlines:
+            main:
+                outline: board
+        footprints:
+            mx:
+                what: mx
+                where: true
+                params:
+                    keycaps: true
+                    reverse: true
+                    hotswap: false
+                    from: "{{column_net}}"
+                    to: "{{colrow}}"
+            diode:
+                what: diode
+                where: /^matrix_(?!(?:inner|index)_top).*$/ # All rows except inner and index top
+                params:
+                    from: "{{colrow}}"
+                    to: "{{row_net}}"
+                adjust:
+                    shift: [0, -5]
+            diode_inner_top:
+                what: diode
+                where:
+                    ref: matrix_inner_top
+                    shift: [-9, 3]
+                    rotate: 90
+                params:
+                    from: "{{colrow}}"
+                    to: "{{row_net}}"
+            diode_index_top:
+                what: diode
+                where:
+                    ref: matrix_index_top
+                    shift: [-9, 3]
+                    rotate: 90
+                params:
+                    from: "{{colrow}}"
+                    to: "{{row_net}}"
+            nice_nano:
+                what: nice_nano
+                params:
+                    orientation: "up"
+                where:
+                    ref: matrix_inner_top
+                    shift: [-6.9, 3]
+                    rotate: 180
+            jstph_F:
+                what: jstph
+                where:
+                    ref: matrix_middle_home
+                    shift: [-9.5, 5]
+                    rotate: 180
+                params:
+                    side: F
+                    pos: pos
+                    neg: GND
+            jstph_B:
+                what: jstph
+                where:
+                    ref: matrix_middle_home
+                    shift: [-9.5, 5]
+                    rotate: 180
+                params:
+                    side: B
+                    pos: pos
+                    neg: GND
+            pwr_switch_F:
+                what: slider
+                where:
+                    ref: matrix_inner_bottom
+                    shift: [8, 9]
+                    rotate: -90
+                params:
+                    from: pos
+                    to: RAW
+                    side: F
+            pwr_switch_B:
+                what: slider
+                where:
+                    ref: matrix_inner_bottom
+                    shift: [8, 9]
+                    rotate: -90
+                params:
+                    from: pos
+                    to: RAW
+                    side: B
+            mh_outer_top:
+                what: mountinghole
+                where:
+                    ref: matrix_outer_top
+                    shift: [9.5, -9.5]
+            mh_outer_bottom:
+                what: mountinghole
+                where:
+                    ref: matrix_outer_bottom
+                    shift: [9.5, 9.5]
+            mh_inner_top:
+                what: mountinghole
+                where:
+                    ref: matrix_inner_top
+                    shift: [-9.5, -9.5]
+            mh_inner_mod:
+                what: mountinghole
+                where:
+                    ref: matrix_inner_mod
+                    shift: [-9.5, 9.5]
+            mh_index_mod:
+                what: mountinghole
+                where:
+                    ref: matrix_index_mod
+                    shift: [-9.5, 9.5]
+
+cases:
+    plate:
+        - name: plate
+          extrude: 1.5
+          shift: [-200,150,0]
