@@ -75,6 +75,22 @@ outlines:
                 shift: [-11, -11]
               - ref: matrix_outer_bottom
                 shift: [-11, -11]
+    boardXL:
+        - what: polygon
+          operation: stack
+          points:
+              - ref: matrix_outer_top
+                shift: [-11.1, 13.1]
+              - ref: matrix_inner_top
+                shift: [11.1, 13.1]
+              - ref: matrix_inner_mod
+                shift: [11.1, -11.1]
+              - ref: matrix_middle_mod
+                shift: [-11.1, -11.1]
+              - ref: matrix_middle_bottom
+                shift: [-11.1, -11.1]
+              - ref: matrix_outer_bottom
+                shift: [-11.1, -11.1]
     plateKeys:
         - name: board
         - operation: subtract
@@ -83,27 +99,27 @@ outlines:
           size: [13.8, 13.8]
     plateHoles:
         - what: circle
-          radius: 1.5
+          radius: 1
           where:
               - ref: matrix_outer_top
                 shift: [9.5, -9.5]
         - what: circle
-          radius: 1.5
+          radius: 1
           where:
               - ref: matrix_outer_bottom
                 shift: [9.5, 9.5]
         - what: circle
-          radius: 1.5
+          radius: 1
           where:
               - ref: matrix_inner_top
                 shift: [-9.5, -9.5]
         - what: circle
-          radius: 1.5
+          radius: 1
           where:
               - ref: matrix_inner_mod
                 shift: [-9.5, 9.5]
         - what: circle
-          radius: 1.5
+          radius: 1
           where:
               - ref: matrix_index_mod
                 shift: [-9.5, 9.5]
@@ -134,30 +150,30 @@ outlines:
     walls:
         - name: base
         - operation: subtract
-          name: board
+          name: boardXL
     mountingHoles:
         - what: circle
-          radius: 5.5
+          radius: 2.5
           where:
               - ref: matrix_outer_top
                 shift: [9.5, -9.5]
         - what: circle
-          radius: 5.5
+          radius: 2.5
           where:
               - ref: matrix_outer_bottom
                 shift: [9.5, 9.5]
         - what: circle
-          radius: 5.5
+          radius: 2.5
           where:
               - ref: matrix_inner_top
                 shift: [-9.5, -9.5]
         - what: circle
-          radius: 5.5
+          radius: 2.5
           where:
               - ref: matrix_inner_mod
                 shift: [-9.5, 9.5]
         - what: circle
-          radius: 5.5
+          radius: 2.5
           where:
               - ref: matrix_index_mod
                 shift: [-9.5, 9.5]
