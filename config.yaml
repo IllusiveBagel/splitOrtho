@@ -188,6 +188,18 @@ outlines:
     switch:
         - what: rectangle
           size: [10, 5]
+    batteryInner:
+        - what: rectangle
+          size: [55,32]
+          where:
+            shift: [0,-1]
+    batteryOuter:
+        - what: rectangle
+          size: [56.5,32]
+    battery:
+        - name: batteryOuter
+        - operation: subtract
+          name: batteryInner
 pcbs:
     split-ortho:
         outlines:
@@ -328,8 +340,12 @@ cases:
     switch:
         - name: switch
           extrude: 4
-          shift: [55,10,10]
+          shift: [55,0,10]
           rotate: [90,0,90]
+    battery:
+        - name: battery
+          extrude: 8
+          shift: [-10,-6.5,0]
     case:
         - what: case
           name: bottom
@@ -346,3 +362,30 @@ cases:
         - what: case
           name: switch
           operation: subtract
+        - what: case
+          name: battery
+          operation: add
+    caseRight:
+        - what: case
+          name: bottom
+          shift: [0,0,16]
+          operation: add
+        - what: case
+          name: walls
+          operation: add
+        - what: case
+          name: mountingHoles
+          shift: [0,0,7]
+          operation: add
+        - what: case
+          name: usb
+          shift: [0,0,4]
+          operation: subtract
+        - what: case
+          name: switch
+          shift: [0,0,-2]
+          operation: subtract
+        - what: case
+          name: battery
+          shift: [0,0,10]
+          operation: add
