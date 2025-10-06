@@ -181,6 +181,13 @@ outlines:
         - name: mountingHoles
         - operation: subtract
           name: plateHoles
+    usb:
+        - what: rectangle
+          size: [10, 4]
+          corner: 2
+    switch:
+        - what: rectangle
+          size: [10, 5]
 pcbs:
     split-ortho:
         outlines:
@@ -313,6 +320,16 @@ cases:
         - name: caseHoles
           extrude: 11
           shift: [-200, 150, 0]
+    usb:
+        - name: usb
+          extrude: 4
+          shift: [55,30,8]
+          rotate: [90,0,90]
+    switch:
+        - name: switch
+          extrude: 4
+          shift: [55,10,10]
+          rotate: [90,0,90]
     case:
         - what: case
           name: bottom
@@ -323,3 +340,9 @@ cases:
         - what: case
           name: mountingHoles
           operation: add
+        - what: case
+          name: usb
+          operation: subtract
+        - what: case
+          name: switch
+          operation: subtract
