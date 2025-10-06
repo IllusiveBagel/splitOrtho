@@ -85,28 +85,28 @@ outlines:
         - what: circle
           radius: 1.5
           where:
-            - ref: matrix_outer_top
-              shift: [9.5, -9.5]
+              - ref: matrix_outer_top
+                shift: [9.5, -9.5]
         - what: circle
           radius: 1.5
           where:
-            - ref: matrix_outer_bottom
-              shift: [9.5, 9.5]
+              - ref: matrix_outer_bottom
+                shift: [9.5, 9.5]
         - what: circle
           radius: 1.5
           where:
-            - ref: matrix_inner_top
-              shift: [-9.5, -9.5]
+              - ref: matrix_inner_top
+                shift: [-9.5, -9.5]
         - what: circle
           radius: 1.5
           where:
-            - ref: matrix_inner_mod
-              shift: [-9.5, 9.5]
+              - ref: matrix_inner_mod
+                shift: [-9.5, 9.5]
         - what: circle
           radius: 1.5
           where:
-            - ref: matrix_index_mod
-              shift: [-9.5, 9.5]
+              - ref: matrix_index_mod
+                shift: [-9.5, 9.5]
     plate:
         - name: plateKeys
         - operation: subtract
@@ -115,6 +115,56 @@ outlines:
         - name: board
         - operation: subtract
           name: keys
+    base:
+        - what: polygon
+          operation: stack
+          points:
+              - ref: matrix_outer_top
+                shift: [-13, 15]
+              - ref: matrix_inner_top
+                shift: [13, 15]
+              - ref: matrix_inner_mod
+                shift: [13, -13]
+              - ref: matrix_middle_mod
+                shift: [-13, -13]
+              - ref: matrix_middle_bottom
+                shift: [-13, -13]
+              - ref: matrix_outer_bottom
+                shift: [-13, -13]
+    walls:
+        - name: base
+        - operation: subtract
+          name: board
+    mountingHoles:
+        - what: circle
+          radius: 5.5
+          where:
+              - ref: matrix_outer_top
+                shift: [9.5, -9.5]
+        - what: circle
+          radius: 5.5
+          where:
+              - ref: matrix_outer_bottom
+                shift: [9.5, 9.5]
+        - what: circle
+          radius: 5.5
+          where:
+              - ref: matrix_inner_top
+                shift: [-9.5, -9.5]
+        - what: circle
+          radius: 5.5
+          where:
+              - ref: matrix_inner_mod
+                shift: [-9.5, 9.5]
+        - what: circle
+          radius: 5.5
+          where:
+              - ref: matrix_index_mod
+                shift: [-9.5, 9.5]
+    caseHoles:
+        - name: mountingHoles
+        - operation: subtract
+          name: plateHoles
 pcbs:
     split-ortho:
         outlines:
@@ -234,4 +284,26 @@ cases:
     plate:
         - name: plate
           extrude: 1.5
-          shift: [-200,150,0]
+          shift: [-200, 150, 0]
+    bottom:
+        - name: base
+          extrude: 2
+          shift: [-200, 150, 0]
+    walls:
+        - name: walls
+          extrude: 18
+          shift: [-200, 150, 0]
+    mountingHoles:
+        - name: caseHoles
+          extrude: 11
+          shift: [-200, 150, 0]
+    case:
+        - what: case
+          name: bottom
+          operation: add
+        - what: case
+          name: walls
+          operation: add
+        - what: case
+          name: mountingHoles
+          operation: add
