@@ -221,8 +221,6 @@ pcbs:
                 params:
                     from: "{{colrow}}"
                     to: "{{row_net}}"
-                adjust:
-                    shift: [0, -5]
             diode_inner_top:
                 what: diode
                 where:
